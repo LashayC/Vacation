@@ -4,7 +4,7 @@ const destinationInput = document.getElementById("destination")
 const locationInput = document.getElementById("location")
 const photoInput = document.getElementById("photo")
 const wishList = document.getElementById("myWishlist")
-const h2OnList = document.getElementsByName("h2")
+const h2OnList = document.querySelector("h2")
 const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTASyaCuEvNl3LRXjmwbhRiHbjBVKC-xH-CcQ&usqp=CAU'
 //pull input from form
 //append to card parts
@@ -88,6 +88,8 @@ function makeWishList(e){
 
 }
 
+
+
 //Create edit button
 //create pop up window
 //for each field, pull value 
@@ -117,9 +119,13 @@ wishList.addEventListener('click', function(e){
 //remove it
 wishList.addEventListener('click', function(e){
     if(e.target.id == 'removeButton'){
-        console.log(e.target.parentNode.parentNode.parentNode.parentNode)
+        // console.log(e.target.parentNode.parentNode.parentNode.parentNode)
         e.target.parentNode.parentNode.parentNode.parentNode.remove()
     }
+    // if(!wishList.hasChildNodes()){
+    //     console.log
+    //     h2OnList.innerText = 'Enter Destination Details'}
 })
+
 
 document.querySelector('form').addEventListener('submit', makeWishList)
