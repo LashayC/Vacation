@@ -6,10 +6,10 @@ const photoInput = document.getElementById("photo")
 const wishList = document.getElementById("myWishlist")
 const h2OnList = document.querySelector("h2")
 const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTASyaCuEvNl3LRXjmwbhRiHbjBVKC-xH-CcQ&usqp=CAU'
+
 //pull input from form
 //append to card parts
 //add bootstrap classes
-
 function makeWishList(e){
     e.preventDefault()
     //get values from input
@@ -24,7 +24,6 @@ function makeWishList(e){
 
     const card = document.createElement('div')
     card.className = 'card mb-2'
-    // card.style.width = '15rem'
 
     const cardImage = document.createElement('img')
     cardImage.className = 'card-img-top'
@@ -65,7 +64,7 @@ function makeWishList(e){
     editButton.innerText = 'Edit'
     removeButton.innerText = 'Remove'
 
-    //append valued to show in dom
+    //append values to show in dom
     wishList.appendChild(cardDiv)
     cardDiv.appendChild(card)
     card.appendChild(cardImage)
@@ -99,16 +98,17 @@ wishList.addEventListener('click', function(e){
  
     if(e.target.id == 'editButton'){
         let editDestination = prompt("Enter new name")
-       if(editDestination != '') {e.target.parentNode.parentNode.childNodes[0].innerText = editDestination}
+       if(editDestination) {e.target.parentNode.parentNode.childNodes[0].innerText = editDestination}
+    //    editDestination ? e.target.parentNode.parentNode.childNodes[0].innerText = editDestination : null
 
        let editLocation = prompt('Enter new location')
-       if(editLocation != '') {e.target.parentNode.parentNode.childNodes[1].innerText = editLocation}
+       if(editLocation) {e.target.parentNode.parentNode.childNodes[1].innerText = editLocation}
 
        let editPhoto = prompt('Enter new photo')
-       if(editPhoto != '') {e.target.parentNode.parentNode.parentNode.childNodes[0].src}
+       if(editPhoto) {e.target.parentNode.parentNode.parentNode.childNodes[0].src = editPhoto}
 
        let editDescription = prompt('Enter new description')
-       if(editDescription != '') {e.target.parentNode.parentNode.childNodes[2].innerText = editDescription}
+       if(editDescription) {e.target.parentNode.parentNode.childNodes[2].innerText = editDescription}
 
     }
     
@@ -119,12 +119,9 @@ wishList.addEventListener('click', function(e){
 //remove it
 wishList.addEventListener('click', function(e){
     if(e.target.id == 'removeButton'){
-        // console.log(e.target.parentNode.parentNode.parentNode.parentNode)
         e.target.parentNode.parentNode.parentNode.parentNode.remove()
     }
-    // if(!wishList.hasChildNodes()){
-    //     console.log
-    //     h2OnList.innerText = 'Enter Destination Details'}
+
 })
 
 
