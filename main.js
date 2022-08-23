@@ -18,16 +18,6 @@ function makeWishList(e){
     let destination = destinationInput.value
     let photo = photoInput.value
 
-    //validation
-    if(destination.length == 0){
-        alert('Destination field is required')
-        return false
-    }
-    if(location.length == 0){
-        alert('Location field is required')
-        return false
-    }
-
     // create card w/classes
     const cardDiv = document.createElement('div')
     cardDiv.className = 'col-4'
@@ -102,8 +92,6 @@ function makeWishList(e){
 //create pop up window
 //for each field, pull value 
 //replace fields in this box with new value
-
-
 wishList.addEventListener('click', function(e){
     console.log(e.target.parentNode.parentNode.parentNode.childNodes[0].src)
  
@@ -134,4 +122,4 @@ wishList.addEventListener('click', function(e){
     }
 })
 
-addButton.addEventListener('click', makeWishList)
+document.querySelector('form').addEventListener('submit', makeWishList)
