@@ -15,37 +15,43 @@
     <title>Vacation</title>
   </head>
   <body>
-    <h1>Vacation Destinations Wishlist</h1>
-    <p>
-      Found exciting places to visition on your next vacation? Use the form
-      below to add them to your wishlist
-    </p>
-    <div class="container">
+
+      
+      <div class="container-fluid p-5 bg-light mb-4 text-center" >
+          <h1>Vacation Destinations Wishlist</h1>
+          <p>
+              Found exciting places to visition on your next vacation? Use the form
+              below to add them to your wishlist
+            </p>
+        </div>
+        <div class="container">
       <div class="row">
-        <div class="col-4">
-          <form action="" class="col">
-            <label for="destination"> Destination name </label>
-            <div>
+        <div class="col-md-3">
+          <form>
+              <div >
+                <label for="destination"> Destination name </label>
               <input
                 type="text"
                 class="form-control"
-                name=""
+                name="destination"
                 id="destination"
                 placeholder="Enter the name of the destination"
+                required minlength="2"
               />
             </div>
-            <label for="location"> Location </label>
             <div>
+                <label for="location"> Location </label>
               <input
                 type="text"
                 class="form-control"
                 name=""
                 id="location"
                 placeholder="Where is it located?"
+                required minlength="2"
               />
             </div>
-            <label for="photo"> Photo </label>
             <div>
+                <label for="photo"> Photo </label>
               <input
                 type="url"
                 class="form-control"
@@ -54,41 +60,30 @@
                 placeholder="Enter an image url"
               />
             </div>
-            <label for="description"> Description </label>
             <div>
+                <label for="description"> Description </label>
               <textarea
                 name=""
                 class="form-control"
                 id="description"
                 cols="30"
-                rows="10"
+                rows="5"
                 placeholder="Where is it located?"
               ></textarea>
               <!-- <input type="tex" name="" id=""> -->
             </div>
-            <button id="addItem" type="button" class="btn btn-primary">
+            <div class="d-grid mt-1">
+            <button id="addItem" type="submit" class="btn btn-primary">
               Add to list
             </button>
+        </div>
           </form>
         </div>
 
-        <div class="col-8">
-          <h2>My Wishlist</h2>
-          <div class="row g-4" id="myWishlist">
-            <!-- <div class="col-4">
-              <div class="card" style="width: 18rem">
-                <img src="..." class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div> -->
-          
+        <div class="col-md-9">
+          <h2 class="text-center">Enter Destination Details</h2>
+          <div class="row justify-content-center" id="myWishlist">
+    
           </div>
         </div>
       </div>

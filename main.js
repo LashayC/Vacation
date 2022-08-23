@@ -4,6 +4,7 @@ const destinationInput = document.getElementById("destination")
 const locationInput = document.getElementById("location")
 const photoInput = document.getElementById("photo")
 const wishList = document.getElementById("myWishlist")
+const h2OnList = document.getElementsByName("h2")
 const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTASyaCuEvNl3LRXjmwbhRiHbjBVKC-xH-CcQ&usqp=CAU'
 //pull input from form
 //append to card parts
@@ -17,13 +18,23 @@ function makeWishList(e){
     let destination = destinationInput.value
     let photo = photoInput.value
 
-    //create card w/classes
+    //validation
+    if(destination.length == 0){
+        alert('Destination field is required')
+        return false
+    }
+    if(location.length == 0){
+        alert('Location field is required')
+        return false
+    }
+
+    // create card w/classes
     const cardDiv = document.createElement('div')
-    cardDiv.className = 'col-4 mx-1'
+    cardDiv.className = 'col-4'
 
     const card = document.createElement('div')
-    card.className = 'card'
-    card.style.width = '18rem'
+    card.className = 'card mb-2'
+    // card.style.width = '15rem'
 
     const cardImage = document.createElement('img')
     cardImage.className = 'card-img-top'
@@ -76,14 +87,16 @@ function makeWishList(e){
     buttonDiv.appendChild(editButton)
     buttonDiv.appendChild(removeButton)
 
+    //change heading on list
+    h2OnList.innerText = 'My WishList'
+
     //reset input fields
-    descriptionInput.value = ''
+    destinationInput.value = ''
     locationInput.value = ''
     photoInput.value = ''
     descriptionInput.value = ''
 
 }
-const editButton = document.getElementById("editButton")
 
 //Create edit button
 //create pop up window
@@ -93,7 +106,7 @@ const editButton = document.getElementById("editButton")
 
 wishList.addEventListener('click', function(e){
     console.log(e.target.parentNode.parentNode.parentNode.childNodes[0].src)
-    // console.log(e.target.parentNode.parentNode) //Gives the card heading. childNodes = heading
+ 
     if(e.target.id == 'editButton'){
         let editDestination = prompt("Enter new name")
        if(editDestination != '') {e.target.parentNode.parentNode.childNodes[0].innerText = editDestination}
@@ -111,6 +124,14 @@ wishList.addEventListener('click', function(e){
     
 })
 
+//Create remove button
+//target card
+//remove it
+wishList.addEventListener('click', function(e){
+    if(e.target.id == 'removeButton'){
+        console.log(e.target.parentNode.parentNode.parentNode.parentNode)
+        e.target.parentNode.parentNode.parentNode.parentNode.remove()
+    }
+})
 
 addButton.addEventListener('click', makeWishList)
-// editButton.addEventListener('click', editWishList)
