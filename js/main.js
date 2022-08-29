@@ -4,7 +4,7 @@ const destinationInput = document.getElementById("destination")
 const locationInput = document.getElementById("location")
 const wishList = document.getElementById("myWishlist")
 const h2OnList = document.querySelector("h2")
-const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTASyaCuEvNl3LRXjmwbhRiHbjBVKC-xH-CcQ&usqp=CAU'
+const defaultImage = 'images/defaultVacation.jpeg'
 const authKey = config.ACCESS_API_KEY
 
 function getInput(e){
@@ -21,9 +21,9 @@ async function getVacationImage(location, destination){
     let destinationEncode = encodeURIComponent(destination)
 
     try {
-        let response = await fetch(`https://api.unsplash.com/search/photos/?client_id=${authKey}&query=${locationEncode,destinationEncode}`)
+        let response = await fetch(`https://api.unsplash.com/search/photos/?client_id=${authKey}&query=${locationEncode,destinationEncode}&orientation=landscape`)
         let result = await response.json()
-        imageURL = result.results[0].urls.regular
+        imageURL = result.results[0].urls.thumb
         console.log(imageURL)
         return imageURL
     } catch (error) {
@@ -41,7 +41,7 @@ async function makeWishList(description, location, destination){
     cardDiv.className = 'col-4'
 
     const card = document.createElement('div')
-    card.className = 'card mb-2'
+    card.className = 'card mb-2 h-100'
 
     const cardImage = document.createElement('img')
     cardImage.className = 'card-img-top'
@@ -66,7 +66,6 @@ async function makeWishList(description, location, destination){
     const editButton = document.createElement('button')
     editButton.className = 'btn btn-warning btn-sm me-3'
     editButton.setAttribute('id', 'editButton')
-
 
     const removeButton = document.createElement('button')
     removeButton.className = 'btn btn-danger btn-sm'
@@ -102,18 +101,16 @@ async function makeWishList(description, location, destination){
 
 }
 
-
 //Edit cards
 wishList.addEventListener('click', async function(e){
  
-    if(e.target.id == 'editButton'){
+    if(e.target.id === 'editButton'){
         let editDestination = prompt("Enter new name")
        if(editDestination) {e.target.parentNode.parentNode.childNodes[0].innerText = editDestination}
 
        let editLocation = prompt('Enter new location')
        if(editLocation) {e.target.parentNode.parentNode.childNodes[1].innerText = editLocation}
 
-       
        let editDescription = prompt('Enter new description')
        if(editDescription) {e.target.parentNode.parentNode.childNodes[2].innerText = editDescription}
        
@@ -126,11 +123,10 @@ wishList.addEventListener('click', async function(e){
 
 //Remove cards
 wishList.addEventListener('click', function(e){
-    if(e.target.id == 'removeButton'){
+    if(e.target.id === 'removeButton'){
         e.target.parentNode.parentNode.parentNode.parentNode.remove()
     }
 
 })
-
 
 document.querySelector('form').addEventListener('submit', getInput)
