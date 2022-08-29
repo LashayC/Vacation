@@ -5,10 +5,7 @@ const locationInput = document.getElementById("location")
 const wishList = document.getElementById("myWishlist")
 const h2OnList = document.querySelector("h2")
 const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTASyaCuEvNl3LRXjmwbhRiHbjBVKC-xH-CcQ&usqp=CAU'
-// const authKey = 'nTmH_kB9w12-v2MpSH7uNeQiUHwVO0lU5Bs0qYM2Qn0'
 const authKey = config.ACCESS_API_KEY
-
-
 
 function getInput(e){
     e.preventDefault()
