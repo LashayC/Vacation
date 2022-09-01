@@ -7,14 +7,15 @@ const h2OnList = document.querySelector("h2")
 const defaultImage = 'images/defaultVacation.jpeg'
 const authKey = config.ACCESS_API_KEY
 
-async function getInput(e){
+async function getCardValues(e){
     e.preventDefault()
+
     let description = descriptionInput.value
     let location = locationInput.value
     let destination = destinationInput.value
     let photo = await getVacationImage(location, destination)
 
-    makeWishList(description, location, destination, photo)
+    makeWishListCards(description, location, destination, photo)
 }
 
 async function getVacationImage(location, destination){
@@ -25,15 +26,16 @@ async function getVacationImage(location, destination){
         let response = await fetch(`https://api.unsplash.com/search/photos/?client_id=${authKey}&query=${locationEncode,destinationEncode}&orientation=landscape`)
         let result = await response.json()
         imageURL = result.results[0].urls.thumb
-        console.log(imageURL)
+        console.log(result) //demo
         return imageURL
+        
     } catch (error) {
         console.log(`error: ${error}`)
     }
     
 }
 
-function makeWishList(description, location, destination, photo){
+function makeWishListCards(description, location, destination, photo){
 
     // create card w/classes
     const cardDiv = document.createElement('div')
@@ -128,4 +130,4 @@ wishList.addEventListener('click', function(e){
 
 })
 
-document.querySelector('form').addEventListener('submit', getInput)
+document.querySelector('form').addEventListener('submit', getCardValues)
