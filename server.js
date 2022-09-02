@@ -38,38 +38,46 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     //node fetch gets url from unsplash api
     //result is added to form req.body and passed to mongodb.
 
-    app.post("/wishlist", async (req, res) => {
-      // wishlistCollection.insertOne(req.body)
-      //     .then(result => {
-      //         res.redirect('/')
-      //     })
-      //     .catch(error => console.error(error))
+    app.post("/wishlist",  (req, res) => {
       console.log("app.post results", req.body);
-      let destination = req.body.destination;
-      let location = req.body.location;
-      let description = req.body.description;
-      let photo;
-      res.redirect('/')
+    //   let destination = req.body.destination;
+    //   let location = req.body.location;
+    //   res.redirect('/')
 
-      let locationEncode = encodeURIComponent(location);
-      let destinationEncode = encodeURIComponent(destination);
+      let locationEncode = encodeURIComponent(req.body.location);
+      let destinationEncode = encodeURIComponent(req.body.destination);
         console.log('my api key',process.env.PROJECT_API_KEY)
-      try {
-        let response = await fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode, destinationEncode)}&orientation=landscape`, {
+ 
+
+      fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode, destinationEncode)}&orientation=landscape`, {
             headers: {
                 'Authorization': process.env.PROJECT_API_KEY
             }
-        });
-        let result = await response.json();
-        // imageURL = result.results[0].urls.thumb;
-        console.log('fetch results',result); //demo
-        // return imageURL;
-      } catch (error) {
-        console.log(`error: ${error}`);
-      }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log('url from fetch',data.results[0].urls.thumb)
+            let photo = data.results[0].urls.thumb
+
+            wishlistCollection.insertOne({
+                destination: req.body.destination,
+                location: req.body.location,
+                description: req.body.description,
+                photoURL: photo
+            })
+            .then(result => {
+                res.redirect('/')
+            })
+
+
+
+        })
+        .catch(error => {
+            console.log(error)
+        })
+      
     });
 
-    app.route()
 
     // app.post('/wishlist', (req, res) => {
     //     wishlistCollection.insertOne(req.body)
