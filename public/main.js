@@ -94,33 +94,44 @@ const defaultImage = 'images/defaultVacation.jpeg'
     
 // })
 
+//user clicks edit
+//prompts show up asking for changes
+//each change is stored in variable
+//these POST to express server
+//Use fetch for new photo
+//add nothing if blank.
 
 wishList.addEventListener('click', (e) => {
-    let cardObjectID
 
-    console.log('js post request e.target',e.target.id)
-    console.log('objectID text', e.target.parentNode.parentNode.parentNode.parentNode.id)
-    console.log('destination text', e.target.parentNode.parentNode.childNodes)
-    console.log('location text', e.target.parentNode.parentNode.childNodes[1].innerText)
-    console.log('description text', e.target.parentNode.parentNode.childNodes[1].innerText)
-    console.log('photo text', e.target.parentNode.parentNode.parentNode.childNodes)
+    if(e.target.id === 'editButton'){
+        
+        let postBody = {}
+        postBody.cardObjectID = e.target.parentNode.parentNode.parentNode.parentNode.id
+        
+        let editDestination = prompt("Enter new name")
+        if(editDestination) {postBody.destination = editDestination}
+        
+        let editLocation = prompt('Enter new location')
+        if(editLocation) {postBody.location = editLocation}
+        
+        let editDescription = prompt('Enter new description')
+        if(editDescription) {postBody.description = editDescription}
 
-    // fetch('/wishlist', {
-    //     method: 'put', 
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({
-            
-    //     })
-    // })
-    // .then(res => {
-    //     if(res.ok) return res.json()
-    // })
-    // .then(response => {
-    //     console.log(response)
-    // })
-    // .catch(error => {
-    //     console.log(error)
-    // })
+        fetch('/wishlist', {
+            method: 'put', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(postBody)
+        })
+        .then(res => {
+            if(res.ok) return res.json()
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 })
 
 //Remove cards
