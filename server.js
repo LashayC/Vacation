@@ -50,7 +50,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
       let description = req.body.description;
       let photo;
       res.redirect('/')
-      
+
       let locationEncode = encodeURIComponent(location);
       let destinationEncode = encodeURIComponent(destination);
         console.log('my api key',process.env.PROJECT_API_KEY)
@@ -68,6 +68,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         console.log(`error: ${error}`);
       }
     });
+
+    app.route()
 
     // app.post('/wishlist', (req, res) => {
     //     wishlistCollection.insertOne(req.body)
