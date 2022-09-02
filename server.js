@@ -21,17 +21,16 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     app.use(bodyParser.json());
     app.use(express.static("public"));
 
-    app.get("");
-
     app.get("/", (req, res) => {
       db.collection("wishlist")
         .find()
         .toArray()
         .then((results) => {
           console.log("app.get results", results);
+          res.render('index.ejs', {wishlist: results})
+
         })
         .catch((error) => console.error(error));
-      res.render("index.ejs");
     });
 
     //form posts to server.js under app.get or post and /wishlist
@@ -39,15 +38,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     //result is added to form req.body and passed to mongodb.
 
     app.post("/wishlist",  (req, res) => {
-      console.log("app.post results", req.body);
-    //   let destination = req.body.destination;
-    //   let location = req.body.location;
-    //   res.redirect('/')
+      console.log("app.post results", req.body)
 
       let locationEncode = encodeURIComponent(req.body.location);
-      let destinationEncode = encodeURIComponent(req.body.destination);
-        console.log('my api key',process.env.PROJECT_API_KEY)
- 
+      let destinationEncode = encodeURIComponent(req.body.destination); 
 
       fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode, destinationEncode)}&orientation=landscape`, {
             headers: {
@@ -57,21 +51,21 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         .then(res => res.json())
         .then(data => {
             console.log('url from fetch',data.results[0].urls.thumb)
-            let photo = data.results[0].urls.thumb
+            return data.results[0].urls.thumb
 
-            wishlistCollection.insertOne({
+        })
+        .then(imageURL => {
+           wishlistCollection.insertOne({
                 destination: req.body.destination,
                 location: req.body.location,
                 description: req.body.description,
-                photoURL: photo
+                photo: imageURL
             })
-            .then(result => {
-                res.redirect('/')
-            })
-
-
-
+            
         })
+        .then(result => {
+                res.redirect('/')
+            }) 
         .catch(error => {
             console.log(error)
         })
