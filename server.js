@@ -44,49 +44,13 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
                 }
             })
             let result = await response.json()
-            let imageURL = result.results[0].urls.thumb
-            return imageURL
+            // let imageURL = result.results[0].urls.thumb
+            return result.results[0].urls.thumb ? result.results[0].urls.thumb : 'images/defaultVacation.jpeg'
         } catch (error) {
                 console.log(`error: ${error}`)
         }
     
     }
-
-
-    // app.post('/wishlist',  (req, res) => {
-    //     console.log("app.post results", req.body)
-  
-    //     let locationEncode = encodeURIComponent(req.body.location);
-    //     let destinationEncode = encodeURIComponent(req.body.destination); 
-  
-    //     fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode,destinationEncode)}&orientation=landscape`, {
-    //           headers: {
-    //               'Authorization': process.env.PROJECT_API_KEY
-    //           }
-    //       })
-    //       .then(res => res.json())
-    //       .then(data => {
-    //           console.log('url from fetch',data.results[0].urls.thumb)
-    //           return data.results[0].urls.thumb ?  data.results[0].urls.thumb : 'images/defaultVacation.jpeg'
-  
-    //       })
-    //       .then(imageURL => {
-    //          wishlistCollection.insertOne({
-    //               destination: req.body.destination,
-    //               location: req.body.location,
-    //               description: req.body.description,
-    //               photo: imageURL
-    //           })
-              
-    //       })
-    //       .then(result => {
-    //               res.redirect('/')
-    //           }) 
-    //       .catch(error => {
-    //           console.log(error)
-    //       })
-        
-    //   });
 
        app.post('/wishlist', async (req, res) => {
         let imageURL = await getVacationImage(req.body.location, req.body.destination)
@@ -104,41 +68,6 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
             console.log(req.body)
     })
 
-
-    // app.post('/wishlist',  (req, res) => {
-    //   console.log("app.post results", req.body)
-
-    //   let locationEncode = encodeURIComponent(req.body.location);
-    //   let destinationEncode = encodeURIComponent(req.body.destination); 
-
-    //   fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode,destinationEncode)}&orientation=landscape`, {
-    //         headers: {
-    //             'Authorization': process.env.PROJECT_API_KEY
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log('url from fetch',data.results[0].urls.thumb)
-    //         return data.results[0].urls.thumb ?  data.results[0].urls.thumb : 'images/defaultVacation.jpeg'
-
-    //     })
-    //     .then(imageURL => {
-    //        wishlistCollection.insertOne({
-    //             destination: req.body.destination,
-    //             location: req.body.location,
-    //             description: req.body.description,
-    //             photo: imageURL
-    //         })
-            
-    //     })
-    //     .then(result => {
-    //             res.redirect('/')
-    //         }) 
-    //     .catch(error => {
-    //         console.log(error)
-    //     })
-      
-    // });
 
     app.put('/wishlist', (req, res) => {
         // quotesCollection.findOneAndUpdate(
