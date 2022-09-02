@@ -4,12 +4,10 @@ const express = require("express");
 const { resourceLimits } = require("worker_threads");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
-const connectionString =
-  "mongodb+srv://yoda:Fhs6u9AzSsVjk2dV@cluster0.lyzr5dz.mongodb.net/?retryWrites=true&w=majority";
 const fetch = require("node-fetch"); //installed vers 2.6.6
 
 
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
+MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
   .then((client) => {
     console.log("Connected to Database");
     const db = client.db("vacation-wishlist");
@@ -33,11 +31,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         .catch((error) => console.error(error));
     });
 
-    //form posts to server.js under app.get or post and /wishlist
-    //node fetch gets url from unsplash api
-    //result is added to form req.body and passed to mongodb.
 
-    app.post("/wishlist",  (req, res) => {
+    app.post('/wishlist',  (req, res) => {
       console.log("app.post results", req.body)
 
       let locationEncode = encodeURIComponent(req.body.location);
@@ -51,7 +46,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         .then(res => res.json())
         .then(data => {
             console.log('url from fetch',data.results[0].urls.thumb)
-            return data.results[0].urls.thumb
+            return data.results[0].urls.thumb ?  data.results[0].urls.thumb : 'images/defaultVacation.jpeg'
 
         })
         .then(imageURL => {
@@ -72,15 +67,21 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
       
     });
 
-
-    // app.post('/wishlist', (req, res) => {
-    //     wishlistCollection.insertOne(req.body)
-    //         .then(result => {
-    //             res.redirect('/')
-    //         })
-    //         .catch(error => console.error(error))
-    //         console.log(req.body)
-    // })
+    app.put('/wishlist', (req, res) => {
+        // quotesCollection.findOneAndUpdate(
+        //     {name: 'yoda'}, //1 query
+        //     {$set: {
+        //         name: req.body.name,
+        //         quote: req.body.quote
+        //     }}//2 update
+        // )
+        // .then(result => {
+        //     res.json('Success')
+        //     console.log(result)
+        // })
+        // .catch(error => console.error(error))
+        console.log(req.body)
+    })
 
     app.listen(3000, function () {
       console.log("listening on 3000");
