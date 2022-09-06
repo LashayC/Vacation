@@ -70,11 +70,6 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
             console.log(req.body)
     })
 
-    //check if PUT updates mongoDB
-    //check if using req.body inside findOneandUpdate replaces the object ID too
-    //check if you can add photo to the req.body here using req.body.photo = imageURL await
-    //
-
     app.put('/wishlist', async (req, res) => {
         let imageURL = await getVacationImage(req.body.location, req.body.destination)
 

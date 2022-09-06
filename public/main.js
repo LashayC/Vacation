@@ -113,15 +113,12 @@ wishList.addEventListener('click', (e) => {
         console.log('description text', e.target.parentNode.parentNode.childNodes[5].innerText)
 
         let editDestination = prompt("Enter new name")
-        // if(editDestination) {postBody.destination = editDestination}
         editDestination ? postBody.destination = editDestination : postBody.destination = e.target.parentNode.parentNode.childNodes[1].innerText
 
         let editLocation = prompt('Enter new location')
-        // if(editLocation) {postBody.location = editLocation}
         editLocation ? postBody.location = editLocation : postBody.location = e.target.parentNode.parentNode.childNodes[3].innerText
         
         let editDescription = prompt('Enter new description')
-        // if(editDescription) {postBody.description = editDescription}
         editDescription ? postBody.description = editDescription : postBody.description = e.target.parentNode.parentNode.childNodes[5].innerText
 
         fetch('/wishlist', {
@@ -134,6 +131,7 @@ wishList.addEventListener('click', (e) => {
         })
         .then(response => {
             console.log(response)
+            location.reload(true)
         })
         .catch(error => {
             console.log(error)
@@ -147,6 +145,30 @@ wishList.addEventListener('click', function(e){
         e.target.parentNode.parentNode.parentNode.parentNode.remove()
     }
 
+})
+
+deleteButton.addEventListener('click', _ => {
+    fetch('/quotes', {
+        method: 'delete', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            name: 'Darth Vader'
+        })
+    })
+    .then(res => {
+        if(res.ok) return res.json()
+    })
+    .then(response => {
+        if(response === 'No quotes to delete'){
+            messageDiv.textContent = 'No Darth Vader quote to delete'
+        }else{
+            window.location.reload(true)
+
+        }
+    })
+    .catch(error => {
+        console.log(error)
+    })
 })
 
 // document.querySelector('form').addEventListener('submit', getCardValues)
