@@ -21,6 +21,8 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
     app.use(bodyParser.json());
     app.use(express.static("public"));
 
+    app.disable('etag')
+
     app.get("/", (req, res) => {
       db.collection("wishlist")
         .find()
@@ -102,5 +104,6 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
     })
  
     app.listen(port);
+    
   })
   .catch((error) => console.error(error));
