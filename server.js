@@ -41,9 +41,10 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
         try {
             let response = await fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode,destinationEncode)}&orientation=landscape`, {
                 headers: {
-                    'Authorization': process.env.PROJECT_API_KEY
+                    'Authorization': `Client-ID ${process.env.PROJECT_API_KEY}`
                 }
             })
+
             let result = await response.json()
             // let imageURL = result.results[0].urls.thumb
             return result.results[0].urls.thumb ? result.results[0].urls.thumb : 'images/defaultVacation.jpeg'
@@ -101,10 +102,9 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
     })
     
 
-    // app.listen(process.env.PORT)
-    // app.listen(3000, function () {
-    //   console.log("listening on 3000")
 
+    // app.listen(3000, function () {
+    //     console.log("listening on 3000");
     // });
 
  

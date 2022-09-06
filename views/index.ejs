@@ -78,18 +78,19 @@
             <% for (var i = 0; i < wishlist.length; i++) { %>
             <div class="col-4" id="<%= wishlist[i]._id %>">
               <div class="card mb-2 h-100">
-                <img src="<%= wishlist[i].photo%>" alt="" class="card-img-top">
+                <img src=<%= wishlist[i].photo ? wishlist[i].photo : 'images/defaultVacation.jpeg' %> alt="" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title" id="cardHeading"><%= wishlist[i].destination %></h5>
                   <h6 class="card-title" id="cardSubhead"><%= wishlist[i].location %></h6>
                   <p class="card=text"><%= wishlist[i].description %></p>
-                  <div class="d-grid gap-3 d-md-block">
+                  <div class="d-grid gap-3 d-md-block">eifjcbbtjflr
                     <button id="editButton" class="btn btn-warning btn-sm me-3">Edit</button>
                     <button id="removeButton" class="btn btn-danger btn-sm">Remove</button>
                   </div>
                 </div>
               </div>
             </div>
+
             <% } %>
 
           </div>
