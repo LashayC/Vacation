@@ -5,6 +5,8 @@ const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const fetch = require("node-fetch"); //installed vers 2.6.6
 const {ObjectId} = require('mongodb')
+var port = process.env.PORT || 8090;
+
 
 
 MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
@@ -97,10 +99,15 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
         .catch(error => console.error(error))
        
     })
+    
 
+    // app.listen(process.env.PORT)
+    // app.listen(3000, function () {
+    //   console.log("listening on 3000")
 
-    app.listen(3000, function () {
-      console.log("listening on 3000");
-    });
+    // });
+
+ 
+    app.listen(port);
   })
   .catch((error) => console.error(error));
