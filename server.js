@@ -5,6 +5,8 @@ const { resourceLimits } = require("worker_threads");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const fetch = require("node-fetch"); //installed vers 2.6.6
+const { read } = require("fs");
+const {ObjectId} = require('mongodb')
 
 
 MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
@@ -68,22 +70,29 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
             console.log(req.body)
     })
 
+    //check if PUT updates mongoDB
+    //check if using req.body inside findOneandUpdate replaces the object ID too
+    //check if you can add photo to the req.body here using req.body.photo = imageURL await
+    //
 
-    app.put('/wishlist', (req, res) => {
-        // quotesCollection.findOneAndUpdate(
-        //     {_id: req.body.cardObjectID}, //1 query
-        //     {$set: {
-        //         destination: req.body.destination,
-        //         location: req.body.location,
-        //         description: req.body.description
-        //     }}//2 update
-        // )
-        // .then(result => {
-        //     res.json('Success')
-        //     console.log(result)
-        // })
-        // .catch(error => console.error(error))
-        console.log(req.body)
+    app.put('/wishlist', async (req, res) => {
+        let imageURL = await getVacationImage(req.body.location, req.body.destination)
+
+        wishlistCollection.findOneAndUpdate(
+            {_id: ObjectId(req.body.cardObjectID)}, //1 query
+            {$set: {
+                destination: req.body.destination,
+                location: req.body.location,
+                description: req.body.description,
+                photo: imageURL
+            }}//2 update
+        )
+        .then(result => {
+            res.json('Success')
+            console.log('this is the result of app.put',result)
+        })
+        .catch(error => console.error(error))
+        console.log('this is body of app.put',req.body)
     })
 
     app.listen(3000, function () {

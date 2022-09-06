@@ -108,14 +108,21 @@ wishList.addEventListener('click', (e) => {
         let postBody = {}
         postBody.cardObjectID = e.target.parentNode.parentNode.parentNode.parentNode.id
         
+        console.log('destination text', e.target.parentNode.parentNode.childNodes[1].innerText)
+        console.log('location text', e.target.parentNode.parentNode.childNodes[3].innerText)
+        console.log('description text', e.target.parentNode.parentNode.childNodes[5].innerText)
+
         let editDestination = prompt("Enter new name")
-        if(editDestination) {postBody.destination = editDestination}
-        
+        // if(editDestination) {postBody.destination = editDestination}
+        editDestination ? postBody.destination = editDestination : postBody.destination = e.target.parentNode.parentNode.childNodes[1].innerText
+
         let editLocation = prompt('Enter new location')
-        if(editLocation) {postBody.location = editLocation}
+        // if(editLocation) {postBody.location = editLocation}
+        editLocation ? postBody.location = editLocation : postBody.location = e.target.parentNode.parentNode.childNodes[3].innerText
         
         let editDescription = prompt('Enter new description')
-        if(editDescription) {postBody.description = editDescription}
+        // if(editDescription) {postBody.description = editDescription}
+        editDescription ? postBody.description = editDescription : postBody.description = e.target.parentNode.parentNode.childNodes[5].innerText
 
         fetch('/wishlist', {
             method: 'put', 
