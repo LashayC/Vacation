@@ -1,6 +1,9 @@
 config.js
 .DS_Store
 .env
+/*.env
+/node_modules
+npm-debug.log
 
 lib-cov
 *.seed
