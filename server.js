@@ -1,11 +1,9 @@
 require("dotenv").config()
 const bodyParser = require("body-parser");
 const express = require("express");
-const { resourceLimits } = require("worker_threads");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const fetch = require("node-fetch"); //installed vers 2.6.6
-const { read } = require("fs");
 const {ObjectId} = require('mongodb')
 
 
@@ -37,7 +35,6 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
     async function getVacationImage(location, destination){
         let locationEncode = encodeURIComponent(location)
         let destinationEncode = encodeURIComponent(destination)
-    
         
         try {
             let response = await fetch( `https://api.unsplash.com/search/photos/?query=${(locationEncode,destinationEncode)}&orientation=landscape`, {
@@ -89,6 +86,18 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
         .catch(error => console.error(error))
         console.log('this is body of app.put',req.body)
     })
+
+    app.delete('/wishlist', (req, res) => {
+        wishlistCollection.deleteOne(
+            {_id: ObjectId(req.body.cardObjectID)} //query
+        )
+        .then(result => {
+            res.json('Deleted card')
+        })
+        .catch(error => console.error(error))
+       
+    })
+
 
     app.listen(3000, function () {
       console.log("listening on 3000");
