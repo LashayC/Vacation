@@ -47,7 +47,7 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
 
             let result = await response.json()
             // let imageURL = result.results[0].urls.thumb
-            return result.results[0].urls.thumb ? result.results[0].urls.thumb : 'images/defaultVacation.jpeg'
+            return result.results[0].urls.thumb
         } catch (error) {
                 console.log(`error: ${error}`)
         }
@@ -100,13 +100,6 @@ MongoClient.connect(process.env.MONGO_CONNECTION, { useUnifiedTopology: true })
         .catch(error => console.error(error))
        
     })
-    
-
-
-    // app.listen(3000, function () {
-    //     console.log("listening on 3000");
-    // });
-
  
     app.listen(port);
   })
